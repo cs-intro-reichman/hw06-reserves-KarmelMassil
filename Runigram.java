@@ -65,7 +65,12 @@ public class Runigram {
 	// For example, to check that some image processing function works correctly,
 	// we can apply the function and then use this function to print the resulting image.
 	private static void print(Color[][] image) {
-		
+		for (int i = 0; i < image.length; i++) {
+			for (int j=0; j < image[0].length; j++) { 
+				print(image [i][j]);
+			}
+			System.out.println();
+		}
 	}
 	
 	/**
@@ -74,10 +79,8 @@ public class Runigram {
 	public static Color[][] flippedHorizontally(Color[][] image) {
 		Color [][] hflip = new Color [image.length][image[0].length];
 		for (int i = 0; i < image.length; i++) {
-			int k = image[0].length - 1;
 			for (int j = 0; j < image[0].length; j++) {
-				hflip[i][j] = image[i][k];
-				k--;
+				hflip[i][j] = image[i][image[0].length - 1 - j];
 			}
 		}
 		return hflip;
@@ -89,10 +92,8 @@ public class Runigram {
 	public static Color[][] flippedVertically(Color[][] image){
 		Color [][] vflip = new Color [image.length][image[0].length];
 		for (int i = 0; i < image[0].length; i++) {
-			int k = image.length - 1;
 			for (int j = 0; j < image.length; j++) {
-				vflip[j][i] = image[j][k];
-				k--;
+				vflip[j][i] = image[image.length - 1 - j][i];
 			}
 		}
 		return vflip;
@@ -151,9 +152,9 @@ public class Runigram {
 		int r2 = c2.getRed();
 		int g2 = c2.getGreen();
 		int b2 = c2.getBlue();
-		int r3 = (int) ((alpha * r1) + ((1 - alpha) * r2));
-		int g3 = (int) ((alpha * g1) + ((1 - alpha) * g2));
-		int b3 = (int) ((alpha * b1) + ((1 - alpha) * b2));
+		int r3 = Math.min ((int) ((alpha * r1) + ((1 - alpha) * r2)), 255);
+		int g3 = Math.min ((int) ((alpha * g1) + ((1 - alpha) * g2)), 255);
+		int b3 = Math.min ((int) ((alpha * b1) + ((1 - alpha) * b2)), 255);
 		Color blnd = new Color (r3 , g3, b3);
 		return blnd;
 	}
@@ -186,7 +187,8 @@ public class Runigram {
 			source = scaled(source, target[0].length, target.length);
 		}
 		for (int a = 0; a < n; a++) {
-					source = blend (source, target, (n - a) / 3);
+					mrph = blend (source, target, (n - a) / 3);
+					display(mrph);
 		}
 	}
 	
