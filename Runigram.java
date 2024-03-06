@@ -10,8 +10,8 @@ public class Runigram {
 		//// Hide / change / add to the testing code below, as needed.
 		
 		// Tests the reading and printing of an image:	
-		Color[][] tinypic = read("tinypic.ppm");
-		print(tinypic);
+		//Color[][] tinypic = read("tinypic.ppm");
+		//print(tinypic);
 
 		// Creates an image which will be the result of various 
 		// image processing operations:
@@ -106,7 +106,7 @@ public class Runigram {
 		int r = pixel.getRed();
 		int g = pixel.getGreen();
 		int b = pixel.getBlue();
-		int lum = (int) (0.299 * r + 0.587 * g + 0.114 * b);
+		int lum = (int) ((0.299 * r) + (0.587 * g) + (0.114 * b));
 		return new Color (lum, lum, lum);
 	}
 	
@@ -115,8 +115,8 @@ public class Runigram {
 	 */
 	public static Color[][] grayScaled(Color[][] image) {
 		Color [][] grey = new Color [image.length][image[0].length];
-		for (int i = 0; i < image[0].length; i++) {
-			for (int j = 0; j < image.length; j++) {
+		for (int i = 0; i < image.length; i++) {
+			for (int j = 0; j < image[0].length; j++) {
 				grey [i][j] = luminance(image [i][j]); 
 			}
 		}
@@ -129,11 +129,11 @@ public class Runigram {
 	 */
 	public static Color[][] scaled(Color[][] image, int width, int height) {
 		Color [][] scale = new Color [height][width];
-		int b = (int) image.length / width;
-		int l = (int) image[0].length / height;
+		double l = (double) image.length / height;
+		double b = (double) image[0].length / width;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				scale [i][j] = image [l*i][b*j];
+				scale [i][j] = image [(int) (l * i)][(int) (b * j)];
 			}
 		}
 		return scale;	
@@ -152,10 +152,13 @@ public class Runigram {
 		int r2 = c2.getRed();
 		int g2 = c2.getGreen();
 		int b2 = c2.getBlue();
-		int r3 = Math.min ((int) ((alpha * r1) + ((1 - alpha) * r2)), 255);
-		int g3 = Math.min ((int) ((alpha * g1) + ((1 - alpha) * g2)), 255);
-		int b3 = Math.min ((int) ((alpha * b1) + ((1 - alpha) * b2)), 255);
-		Color blnd = new Color (r3 , g3, b3);
+		int r3 = (int) ((alpha * r1) + ((1 - alpha) * r2));
+		int g3 = (int) ((alpha * g1) + ((1 - alpha) * g2));
+		int b3 = (int) ((alpha * b1) + ((1 - alpha) * b2));
+		int fr = Math.min(255, Math.max(0, r3));
+		int fg = Math.min(255, Math.max(0, g3));
+		int fb = Math.min(255, Math.max(0, b3));
+		Color blnd = new Color (fr , fg, fb);
 		return blnd;
 	}
 	
@@ -167,8 +170,8 @@ public class Runigram {
 	 */
 	public static Color[][] blend(Color[][] image1, Color[][] image2, double alpha) {
 		Color [][] blnd = new Color [image1.length][image1[0].length];
-		for (int i = 0; i < image1[0].length; i++) {
-			for (int j = 0; j < image1.length; j++) {
+		for (int i = 0; i < image1.length; i++) {
+			for (int j = 0; j < image1[0].length; j++) {
 				blnd [i][j] = blend(image1 [i][j], image2 [i][j], alpha);
 			}
 		}
