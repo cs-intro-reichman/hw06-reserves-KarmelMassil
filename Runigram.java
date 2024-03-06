@@ -187,7 +187,7 @@ public class Runigram {
 			source = scaled(source, target[0].length, target.length);
 		}
 		for (int a = 0; a < n; a++) {
-					mrph = blend (source, target, (n - a) / 3);
+					Color[][] mrph = blend (source, target, (n - a) / 3);
 					display(mrph);
 		}
 	}
