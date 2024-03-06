@@ -15,12 +15,12 @@ public class Runigram {
 
 		// Creates an image which will be the result of various 
 		// image processing operations:
-		Color[][] imageOut;
+		// Color[][] imageOut;
 
 		/// Tests the horizontal flipping of an image:
-		imageOut = flippedHorizontally(tinypic);
+		/* imageOut = flippedHorizontally(tinypic);
 		System.out.println();
-		print(imageOut);
+		print(imageOut); */
 		
 		//// Write here whatever code you need in order to test your work.
 		//// You can reuse / overide the contents of the imageOut array.
@@ -41,8 +41,13 @@ public class Runigram {
 		// For each pixel (i,j), reads 3 values from the file,
 		// creates from the 3 colors a new Color object, and 
 		// makes pixel (i,j) refer to that object.
-		//// Replace the following statement with your code.
-		return null;
+		System.out.println(in.readLine());	
+		for (int i=0; i<numRows; i++) {
+			for (int j=0; j<numCols; j++) {
+				image[i][j] = new Color(in.readInt(),in.readInt(),in.readInt());
+			}
+		}
+		return image;
 	}
 
     // Prints the RGB values of a given color.
